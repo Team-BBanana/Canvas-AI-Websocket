@@ -7,12 +7,8 @@ import asyncio
 import websockets
 import io
 
-os.environ.clear()
-load_dotenv()
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-print("OPEN_API_KEY:", OPENAI_API_KEY)  # 확인용
-ELEVEN_API_KEY = os.getenv('ELEVEN_API_KEY')
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+ELEVEN_API_KEY = os.environ.get("ELEVEN_API_KEY")
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -93,7 +89,7 @@ async def handle_client(websocket, path=None):
 
 # 웹소켓 서버 실행
 async def start_server():
-    server = await websockets.serve(handle_client, "localhost", 8765)
+    server = await websockets.serve(handle_client, "0.0.0.0", 8765)
     await server.wait_closed()
 
 if __name__ == "__main__":
